@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Vagas - RH</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>Vagas Autoconf</h1>
+            <nav>
+                <button class="nav-btn" onclick="switchView('lider')">Área do Líder</button>
+                <button class="nav-btn" onclick="switchView('rh')">Painel do RH</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="view-lider" class="view active">
+            <div class="card">
+                <h2>Solicitar Abertura de Vaga</h2>
+                <p class="subtitle">Preencha os detalhes para que o RH possa analisar o pedido.</p>
+                
+                <div id="success-msg" class="alert success">Solicitação enviada com sucesso!</div>
+
+                <form id="vaga-form">
+                    <div class="form-group">
+                        <label for="lider">Nome do Líder:</label>
+                        <input type="text" id="lider" placeholder="Seu nome completo" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="setor">Setor:</label>
+                            <select id="setor" required>
+                                <option value="">Selecione...</option>
+                                <option value="TI">Tecnologia</option>
+                                <option value="Pré-Vendas">Pré-vendas</option>
+                                <option value="Vendas">Vendas</option>
+                                <option value="Custumer Service">Custumer Service</option>
+                                <option value="Suporte">Suporte</option>
+                                <option value="Projeto e Produto">Projeto e Produto</option>
+                                <option value="Sustentação">Sustentação</option>
+                                <option value="Financeiro">Financeiro</option>
+                                <option value="Pessoas e cultura">Pessoas e cultura</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cargo">Cargo:</label>
+                            <input type="text" id="cargo" placeholder="Ex: Analista Sênior" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipo">Tipo de Vaga:</label>
+                            <select id="tipo" required>
+                                <option value="Substituição">Substituição (Saída de colaborador)</option>
+                                <option value="Aumento de Quadro">Aumento de Quadro (Nova vaga)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="urgencia">Urgência:</label>
+                            <select id="urgencia" required>
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média">Média</option>
+                                <option value="Alta">Alta (Crítica)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="justificativa">Justificativa e Requisitos:</label>
+                        <textarea id="justificativa" rows="4" placeholder="Por que esta vaga é necessária? Quais as competências principais?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="primary-btn">Enviar Solicitação</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="view-login" class="view">
+            <div class="card" style="max-width: 400px; margin: 0 auto;">
+                <h2>Acesso Restrito - People</h2>
+                <p class="subtitle">Insira suas credenciais para continuar.</p>
+                
+                <div id="login-error" class="alert error">Usuário ou senha incorretos!</div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Usuário:</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Senha:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="primary-btn">Entrar</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="view-rh" class="view">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="margin: 0;">Pedidos Pendentes</h2>
+                    <button class="btn-acao" onclick="logoutRH()" style="border-color: #dc2626; color: #dc2626;">Sair do Painel</button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Setor / Líder</th>
+                                <th>Cargo</th>
+                                <th>Tipo</th>
+                                <th>Urgência</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                                <th>Dados</th> </tr>
+                        </thead>
+                        <tbody id="tabela-vagas">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modal-justificativa" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharModal()">&times;</span>
+            <h3 style="margin-top: 0; color: var(--primary-dark);">Motivo da Solicitação</h3>
+            <p id="texto-modal-justificativa" style="white-space: pre-wrap; color: var(--text-main);"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
