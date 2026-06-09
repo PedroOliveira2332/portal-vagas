@@ -3,67 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Vagas - RH</title>
+    <meta name="description" content="Portal de gestão de vagas e recrutamento da Autoconf. Solicite abertura de vagas e acompanhe o processo seletivo.">
+    <title>Portal de Vagas - Autoconf RH</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <div class="header-content">
-            <h1>Vagas Autoconf</h1>
-            <nav>
-                <button class="nav-btn" onclick="switchView('lider')">Área do Líder</button>
-                <button class="nav-btn" onclick="switchView('rh')">Painel do RH</button>
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i data-lucide="briefcase-business"></i>
+                </div>
+                <div>
+                    <h1>Vagas Autoconf</h1>
+                    <p class="header-tagline">Portal de Recrutamento</p>
+                </div>
+            </div>
+            <nav id="main-nav">
+                <button class="nav-btn active" id="nav-lider" onclick="switchView('lider-login')">
+                    <i data-lucide="file-plus-2"></i>
+                    Área do Líder
+                </button>
+                <button class="nav-btn" id="nav-rh" onclick="switchView('rh')">
+                    <i data-lucide="layout-dashboard"></i>
+                    Painel RH
+                </button>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <section id="view-lider" class="view active">
-            <div class="card">
+        <!-- TOAST NOTIFICATIONS -->
+        <div id="toast-container"></div>
+
+        <!-- VIEW: LOGIN DO LÍDER -->
+        <section id="view-lider-login" class="view active">
+            <div class="card card-login fade-in">
+                <div class="card-header-icon">
+                    <i data-lucide="user-check"></i>
+                </div>
+                <h2>Área do Líder</h2>
+                <p class="subtitle">Identifique-se para solicitar abertura de vagas.</p>
+                
+                <div id="lider-login-error" class="alert error">
+                    <i data-lucide="alert-circle"></i>
+                    <span>Usuário ou senha incorretos!</span>
+                </div>
+
+                <form id="lider-login-form">
+                    <div class="form-group">
+                        <label for="lider-username">
+                            <i data-lucide="user"></i>
+                            Usuário
+                        </label>
+                        <input type="text" id="lider-username" placeholder="Digite seu usuário" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lider-password">
+                            <i data-lucide="lock"></i>
+                            Senha
+                        </label>
+                        <div class="password-wrapper">
+                            <input type="password" id="lider-password" placeholder="Digite sua senha" required>
+                            <button type="button" class="btn-toggle-pass" onclick="togglePassword('lider-password', this)" title="Mostrar senha">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn">
+                        <i data-lucide="log-in"></i>
+                        Entrar
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- VIEW: FORMULÁRIO DO LÍDER (após login) -->
+        <section id="view-lider-form" class="view">
+            <div class="card fade-in">
+                <!-- Barra de info do líder logado -->
+                <div class="logged-user-bar">
+                    <div class="logged-user-info">
+                        <div class="logged-user-avatar">
+                            <i data-lucide="user-circle"></i>
+                        </div>
+                        <div>
+                            <span class="logged-user-name" id="logged-lider-name">—</span>
+                            <span class="logged-user-role" id="logged-lider-setor">—</span>
+                        </div>
+                    </div>
+                    <button class="btn-logout-lider" onclick="logoutLider()">
+                        <i data-lucide="log-out"></i>
+                        Sair
+                    </button>
+                </div>
+
+                <div class="card-header-icon">
+                    <i data-lucide="clipboard-list"></i>
+                </div>
                 <h2>Solicitar Abertura de Vaga</h2>
                 <p class="subtitle">Preencha os detalhes para que o RH possa analisar o pedido.</p>
                 
-                <div id="success-msg" class="alert success">Solicitação enviada com sucesso!</div>
+                <div id="success-msg" class="alert success">
+                    <i data-lucide="check-circle-2"></i>
+                    <span>Solicitação enviada com sucesso!</span>
+                </div>
 
                 <form id="vaga-form">
-                    <div class="form-group">
-                        <label for="lider">Nome do Líder:</label>
-                        <input type="text" id="lider" placeholder="Seu nome completo" required>
-                    </div>
-                    
+                    <!-- Nome e Setor: preenchidos automaticamente e travados -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="setor">Setor:</label>
-                            <select id="setor" required>
-                                <option value="">Selecione...</option>
-                                <option value="TI">Tecnologia</option>
-                                <option value="Pré-Vendas">Pré-vendas</option>
-                                <option value="Vendas">Vendas</option>
-                                <option value="Custumer Service">Custumer Service</option>
-                                <option value="Suporte">Suporte</option>
-                                <option value="Projeto e Produto">Projeto e Produto</option>
-                                <option value="Sustentação">Sustentação</option>
-                                <option value="Financeiro">Financeiro</option>
-                                <option value="Pessoas e cultura">Pessoas e cultura</option>
-                            </select>
+                            <label for="lider">
+                                <i data-lucide="user"></i>
+                                Líder
+                            </label>
+                            <input type="text" id="lider" readonly class="input-locked">
                         </div>
                         <div class="form-group">
-                            <label for="cargo">Cargo:</label>
-                            <input type="text" id="cargo" placeholder="Ex: Analista Sênior" required>
+                            <label for="setor">
+                                <i data-lucide="building-2"></i>
+                                Setor
+                            </label>
+                            <input type="text" id="setor" readonly class="input-locked">
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cargo">
+                            <i data-lucide="badge-check"></i>
+                            Cargo
+                        </label>
+                        <input type="text" id="cargo" placeholder="Ex: Analista Sênior" required>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="tipo">Tipo de Vaga:</label>
+                            <label for="tipo">
+                                <i data-lucide="repeat-2"></i>
+                                Tipo de Vaga
+                            </label>
                             <select id="tipo" required>
                                 <option value="Substituição">Substituição (Saída de colaborador)</option>
                                 <option value="Aumento de Quadro">Aumento de Quadro (Nova vaga)</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="urgencia">Urgência:</label>
+                            <label for="urgencia">
+                                <i data-lucide="alert-triangle"></i>
+                                Urgência
+                            </label>
                             <select id="urgencia" required>
                                 <option value="Baixa">Baixa</option>
                                 <option value="Média">Média</option>
@@ -73,41 +168,75 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="justificativa">Justificativa e Requisitos:</label>
+                        <label for="justificativa">
+                            <i data-lucide="message-square-text"></i>
+                            Justificativa e Requisitos
+                        </label>
                         <textarea id="justificativa" rows="4" placeholder="Por que esta vaga é necessária? Quais as competências principais?" required></textarea>
                     </div>
 
-                    <button type="submit" class="primary-btn">Enviar Solicitação</button>
+                    <button type="submit" class="primary-btn">
+                        <i data-lucide="send"></i>
+                        Enviar Solicitação
+                    </button>
                 </form>
             </div>
         </section>
 
+        <!-- VIEW: LOGIN RH -->
         <section id="view-login" class="view">
-            <div class="card" style="max-width: 400px; margin: 0 auto;">
-                <h2>Acesso Restrito - People</h2>
+            <div class="card card-login fade-in">
+                <div class="card-header-icon">
+                    <i data-lucide="shield-check"></i>
+                </div>
+                <h2>Acesso Restrito — People</h2>
                 <p class="subtitle">Insira suas credenciais para continuar.</p>
                 
-                <div id="login-error" class="alert error">Usuário ou senha incorretos!</div>
+                <div id="login-error" class="alert error">
+                    <i data-lucide="alert-circle"></i>
+                    <span>Usuário ou senha incorretos!</span>
+                </div>
 
                 <form id="login-form">
                     <div class="form-group">
-                        <label for="username">Usuário:</label>
-                        <input type="text" id="username" required>
+                        <label for="username">
+                            <i data-lucide="user-circle"></i>
+                            Usuário
+                        </label>
+                        <input type="text" id="username" placeholder="Digite seu usuário" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Senha:</label>
-                        <input type="password" id="password" required>
+                        <label for="password">
+                            <i data-lucide="lock"></i>
+                            Senha
+                        </label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" placeholder="Digite sua senha" required>
+                            <button type="button" class="btn-toggle-pass" onclick="togglePassword('password', this)" title="Mostrar senha">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
                     </div>
-                    <button type="submit" class="primary-btn">Entrar</button>
+                    <button type="submit" class="primary-btn">
+                        <i data-lucide="log-in"></i>
+                        Entrar
+                    </button>
                 </form>
             </div>
         </section>
 
+        <!-- VIEW: PAINEL RH -->
         <section id="view-rh" class="view">
-            <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h2 style="margin: 0;">Pedidos Pendentes</h2>
-                    <button class="btn-acao" onclick="logoutRH()" style="border-color: #dc2626; color: #dc2626;">Sair do Painel</button>
+            <div class="card fade-in">
+                <div class="rh-header">
+                    <div>
+                        <h2>Pedidos Pendentes</h2>
+                        <p class="subtitle rh-subtitle">Gerencie as solicitações de abertura de vagas.</p>
+                    </div>
+                    <button class="btn-logout" onclick="logoutRH()">
+                        <i data-lucide="log-out"></i>
+                        Sair do Painel
+                    </button>
                 </div>
                 
                 <div class="table-responsive">
@@ -121,21 +250,46 @@
                                 <th>Urgência</th>
                                 <th>Status</th>
                                 <th>Ações</th>
-                                <th>Dados</th> </tr>
+                                <th>Dados</th>
+                            </tr>
                         </thead>
                         <tbody id="tabela-vagas">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- MODAL MOTIVO -->
     <div id="modal-justificativa" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="fecharModal()">&times;</span>
-            <h3 style="margin-top: 0; color: var(--primary-dark);">Motivo da Solicitação</h3>
-            <p id="texto-modal-justificativa" style="white-space: pre-wrap; color: var(--text-main);"></p>
+        <div class="modal-content fade-in">
+            <button class="close-btn" onclick="fecharModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="modal-header-icon">
+                <i data-lucide="file-text"></i>
+            </div>
+            <h3 class="modal-title">Motivo da Solicitação</h3>
+            <p id="texto-modal-justificativa" class="modal-body-text"></p>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIRMAÇÃO EXCLUSÃO -->
+    <div id="modal-confirmacao" class="modal">
+        <div class="modal-content fade-in" style="max-width: 400px; text-align: center;">
+            <div class="modal-header-icon" style="margin: 0 auto 1.5rem; background: linear-gradient(135deg, var(--danger), #b91c1c);">
+                <i data-lucide="alert-triangle"></i>
+            </div>
+            <h3 class="modal-title">Excluir Solicitação?</h3>
+            <p class="modal-body-text" style="margin-bottom: 2rem;">Tem certeza que deseja excluir a solicitação? Esta ação não pode ser desfeita.</p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn-acao" onclick="fecharModalConfirmacao()" style="padding: 10px 20px; font-size: 0.9rem; margin: 0;">Cancelar</button>
+                <button class="primary-btn" id="btn-confirmar-exclusao" style="background: linear-gradient(135deg, var(--danger), #b91c1c); width: auto; margin: 0; box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);">
+                    <i data-lucide="trash-2"></i> Excluir
+                </button>
+            </div>
         </div>
     </div>
 
