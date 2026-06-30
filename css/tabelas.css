@@ -1,0 +1,248 @@
+﻿/* ===================================
+   TABLE (PAINEL RH)
+   =================================== */
+.rh-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.rh-header h2 {
+    margin-bottom: 0.2rem;
+}
+
+.rh-subtitle {
+    margin-bottom: 0 !important;
+}
+
+.btn-logout {
+    padding: 9px 18px;
+    font-size: 0.82rem;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: var(--danger-bg);
+    color: var(--danger);
+    font-weight: 600;
+    font-family: inherit;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.btn-logout i {
+    width: 15px;
+    height: 15px;
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: var(--danger);
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: var(--bg-surface);
+}
+
+th {
+    text-align: left;
+    padding: 13px 14px;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: rgba(79, 70, 229, 0.03);
+}
+
+td strong {
+    color: var(--text-main);
+}
+
+td small {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+}
+
+/* Badges de Status */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.status-badge.pendente {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.status-badge.em-andamento {
+    background: rgba(79, 70, 229, 0.12);
+    color: var(--primary-light);
+    border: 1px solid rgba(79, 70, 229, 0.2);
+}
+
+.status-badge.concluido {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Urgência */
+.urgencia-alta {
+    color: var(--danger) !important;
+    font-weight: 700;
+}
+
+.urgencia-media {
+    color: var(--warning) !important;
+    font-weight: 600;
+}
+
+.urgencia-baixa {
+    color: var(--success) !important;
+}
+
+/* Botões de Ação na Tabela */
+.btn-acao {
+    padding: 6px 11px;
+    font-size: 0.72rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: transparent;
+    transition: var(--transition);
+    margin-right: 3px;
+    margin-bottom: 4px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+    color: var(--text-muted);
+}
+
+.btn-acao i {
+    width: 13px;
+    height: 13px;
+}
+
+.btn-acao:hover {
+    transform: translateY(-1px);
+}
+
+.btn-acao.current-status {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.btn-info {
+    color: var(--accent);
+    border-color: rgba(6, 182, 212, 0.3);
+}
+
+.btn-info:hover {
+    background: rgba(6, 182, 212, 0.1);
+}
+
+.btn-pendente {
+    color: var(--warning);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.btn-pendente:hover {
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.btn-andamento {
+    color: var(--primary-light);
+    border-color: rgba(79, 70, 229, 0.3);
+}
+
+.btn-andamento:hover {
+    background: var(--primary-glow);
+}
+
+.btn-concluir {
+    color: var(--success);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.btn-concluir:hover {
+    background: var(--success-bg);
+}
+
+.btn-excluir {
+    color: var(--danger);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.btn-excluir:hover {
+    background: var(--danger-bg) !important;
+}
+
+/* ===================================
+   EMPTY STATE
+   =================================== */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-dim);
+}
+
+.empty-state-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--bg-elevated);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.empty-state-icon i {
+    width: 24px;
+    height: 24px;
+    color: var(--text-dim);
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 0.92rem;
+}
+
